@@ -15,8 +15,11 @@ interface weekNum {
     w: number;
 }
 interface Week {
-    id: string;
+    _id: string;
     Week: number;
     Games: Array<Game>;
     updatedAt: string;
+}
+interface weekNum {
+    result: Array<string>;
 }

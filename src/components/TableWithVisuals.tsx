@@ -74,7 +74,7 @@ const Entry = (props) => {
                     <div className="font-bold">{props.game.Time}</div>
                     <div className="text-sm opacity-50">{props.game.TV.length>4 ? 'CBS' : props.game.TV}</div>
                 </td>
-        }
+            }
             {happened &&
                 <td>
                     <div className=''>
@@ -90,7 +90,7 @@ const Entry = (props) => {
                         </div>
                     </div>
                 </td>
-        }
+            }
             <td>
                 <div className="flex items-center space-x-3">
                     <div className="avatar">
@@ -107,10 +107,10 @@ const Entry = (props) => {
             <td>
                 {!happened && 
                     <div>{getStadium()}</div>
-            }
+                }
                 {happened && 
                     <a className='btn btn-ghost btn-xs' href={props.game.gameInfo} target='_blank' rel='noreferrer'>Game Info</a>
-            }
+                }
             </td>
             <th>
                 <button className="btn btn-ghost btn-xs">details</button>
@@ -120,68 +120,80 @@ const Entry = (props) => {
 }
 
 type Props ={
-weekNum:number;
-thisWeek:Array<Game>;
+    weekNum:number;
+    thisWeek:Array<Game>;
+}
+
+function request<TResponse>(
+    url:string,
+    config: RequestInit ={}
+): Promise<TResponse> {
+    return fetch(url,config)
+        .then((response)=> response.json())
+        .then((data)=> data as TResponse); 
 }
 
 const TableWithVisuals = ({weekNum, thisWeek}:Props) => {
-    const [stuff, setStuff] = useState({lmao:'yes'});
+    const [weekArr, setWeekArr] = useState({});
     useEffect(()=>{
-        console.log('useEffect')
-        getCurrentWeek().then(x=> getWeek(x.result[0].split(' ')[1]).then(y=>setStuff(y)))
-        //getWeek().then(x=> setStuff(x))
+        request<weekNum>('http://localhost:6969/api/currentWeek').then((cw)=>
+            request<Week>('http://localhost:6969/api/season/week/'+cw.result[0].split(' ')[1]).then((wArr)=>
+            setWeekArr(wArr))
+        )
+        //getCurrentWeek().then(x=> getWeek(x.result[0].split(' ')[1]).then(y=>setWeekArr(y)))
+        //getWeek().then(x=> setWeekArr(x))
     },[])
     const changeWeek = (num:number) => {
         console.log('change week to:')
         console.log(num)
-        getWeek(num).then(x=> setStuff(x))
+        getWeek(num).then(x=> setWeekArr(x))
     }
     let games = []
-    if(stuff.result){
+    if(weekArr.result){
 
-        games = stuff.result[0].Games || []
-        //console.log(stuff.result[0].Games[1].Home)
+        games = weekArr.result[0].Games || []
+        //console.log(weekArr.result[0].Games[1].Home)
     }
     return (
         <div className="overflow-x-auto w-full">
-                {stuff.result &&
-            <table className="table w-full">
-                <thead>
-                    <tr>
-                        <th>
-                            <label>
-                                <input type="checkbox" className="checkbox" />
-                            </label>
-                        </th>
-                        <th>Away</th>
-                        <th></th>
-                        <th>Home</th>
-                        <th>More</th>
-                        <th>
-                            <Select thisWeek={thisWeek} onChange={changeWeek} num={16}/>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
+            {weekArr.result &&
+                <table className="table w-full">
+                    <thead>
+                        <tr>
+                            <th>
+                                <label>
+                                    <input type="checkbox" className="checkbox" />
+                                </label>
+                            </th>
+                            <th>Away</th>
+                            <th></th>
+                            <th>Home</th>
+                            <th>More</th>
+                            <th>
+                                <Select thisWeek={thisWeek} onChange={changeWeek} num={16}/>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-                    {games.map((g,i) => {
-                        return <Entry key={i+1} game={g}/>
-                    })}
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th></th>
-                        <th>Away</th>
-                        <th></th>
-                        <th>Home</th>
-                        <th>More</th>
-                        <th></th>
-                    </tr>
-                </tfoot>
+                        {games.map((g,i) => {
+                            return <Entry key={i+1} game={g}/>
+                        })}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th></th>
+                            <th>Away</th>
+                            <th></th>
+                            <th>Home</th>
+                            <th>More</th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
 
-            </table>
-                }
-            {!stuff.result &&
+                </table>
+            }
+            {!weekArr.result &&
 
                 <RadialProgress />
             }
