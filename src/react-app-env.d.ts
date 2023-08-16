@@ -20,6 +20,6 @@ interface Week {
     Games: Array<Game>;
     updatedAt: string;
 }
-interface weekNum {
+interface GameWeek {
     result: Array<string>;
 }

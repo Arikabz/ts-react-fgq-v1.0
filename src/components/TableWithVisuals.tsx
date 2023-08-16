@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import Select from '../components/Select'
 import RadialProgress from '../components/RadialProgress'
 import { getWeek, getCurrentWeek } from '../services/Services'
+import { useGetWeekQuery } from '../slices/apiSlice'
 
 
 const Entry = (props) => {
@@ -121,25 +122,17 @@ const Entry = (props) => {
 
 type Props ={
     weekNum:number;
-    thisWeek:Array<Game>;
 }
 
-function request<TResponse>(
-    url:string,
-    config: RequestInit ={}
-): Promise<TResponse> {
-    return fetch(url,config)
-        .then((response)=> response.json())
-        .then((data)=> data as TResponse); 
-}
 
-const TableWithVisuals = ({weekNum, thisWeek}:Props) => {
+const TableWithVisuals = ({weekNum}:Props) => {
+    const {data, isLoading} = useGetWeekQuery(weekNum)
     const [weekArr, setWeekArr] = useState({});
     useEffect(()=>{
-        request<weekNum>('http://localhost:6969/api/currentWeek').then((cw)=>
-            request<Week>('http://localhost:6969/api/season/week/'+cw.result[0].split(' ')[1]).then((wArr)=>
-            setWeekArr(wArr))
-        )
+        //request<weekNum>('http://localhost:6969/api/currentWeek').then((cw)=>
+            //request<Week>('http://localhost:6969/api/season/week/'+cw.result[0].split(' ')[1]).then((wArr)=>
+            //setWeekArr(wArr))
+        //)
         //getCurrentWeek().then(x=> getWeek(x.result[0].split(' ')[1]).then(y=>setWeekArr(y)))
         //getWeek().then(x=> setWeekArr(x))
     },[])
