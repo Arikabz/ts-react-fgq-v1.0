@@ -13,7 +13,8 @@ export const weekApi = createApi({
         getCurrentWeek: builder.query<number,void>({
             query: () => '/currentWeek',
             transformResponse: (res:string) => {
-                const parsedNumber = parseInt(res.split(' ').filter((x:string)=> parseInt(x))[0]);
+                const match = res.match(/\d+/);
+                const parsedNumber = match ? parseInt(match[0]) : -1;
                 return isNaN(parsedNumber) ? -1 : parsedNumber;
             }
         })
