@@ -5,6 +5,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { Auth0Provider } from '@auth0/auth0-react';
+import { Provider } from 'react-redux';
+import { store } from './store';
 
 const element = document.getElementById('root');
 
@@ -18,7 +20,9 @@ root.render(
                 domain='dev-7fzxcbarf08zoaab.us.auth0.com'
                 clientId='e1Lr5fXH5T4VrRoCEvg1CBHwRdSj0Qcs'
                 redirectUri='http://localhost:3000/dashboard'>
+                <Provider store={store}>
                 <App />
+                </Provider>
             </Auth0Provider >
         </BrowserRouter>
     </React.StrictMode>

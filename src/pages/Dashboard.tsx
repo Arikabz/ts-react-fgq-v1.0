@@ -2,9 +2,12 @@ import TableWithVisuals from '../components/TableWithVisuals'
 import NavbarLoggedIn from '../components/NavbarLoggedIn'
 import {updateSeason, getCurrentWeek} from '../services/Services'
 import { useEffect, useState } from 'react'
+import { useGetWeekQuery, useUpdateSeasonQuery, useGetCurrentWeekQuery } from '../slices/apiSlice'
 
 
 const Dashboard = () => {
+    const {data} = useGetCurrentWeekQuery();
+    const {data, error, isLoading} = useGetWeekQuery()
     const [week, setWeek] = useState('')
     useEffect(()=>{
         console.log('getting week...')
