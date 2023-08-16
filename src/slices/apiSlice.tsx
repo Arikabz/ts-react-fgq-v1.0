@@ -10,8 +10,12 @@ export const weekApi = createApi({
         updateSeason: builder.query<string,void>({
             query: () => '/season',
         }),
-        getCurrentWeek: builder.query<string,void>({
+        getCurrentWeek: builder.query<number,void>({
             query: () => '/currentWeek',
+            transformResponse: (res:string) => {
+                const parsedNumber = parseInt(res.split(' ').filter((x:string)=> parseInt(x))[0]);
+                return isNaN(parsedNumber) ? -1 : parsedNumber;
+            }
         })
     })
 })
