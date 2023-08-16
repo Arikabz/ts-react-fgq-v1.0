@@ -8,15 +8,17 @@ import { setWeekNum } from '../slices/weekNumSlice'
 
 
 const Dashboard = () => {
-    const {isError, data, isLoading, isFetching, isUninitialized} = useGetCurrentWeekQuery();
-    //const dispatch = useDispatch();
-    //dispatch(setWeekNum(weekNumber));
+    const {isError, data, isFetching } = useGetCurrentWeekQuery();
+    const dispatch = useDispatch();
     if(isError) return <>Error</>
     if(isFetching && !data) return <>Loadin</>
     else if (data !== undefined ){
-        <div>
-            <NavbarLoggedIn content={<TableWithVisuals weekNum={data} />} />
-        </div>
+        dispatch(setWeekNum(data));
+        return(
+            <div>
+                <NavbarLoggedIn content={<TableWithVisuals weekNum={data} />} />
+            </div>
+        )
     }
 }
 
