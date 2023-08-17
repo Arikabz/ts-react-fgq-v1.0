@@ -3,6 +3,9 @@ import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react"
 interface weekNumRes {
     result: Array<string>
 }
+interface weekRes {
+    result: Week
+}
 
 export const weekApi = createApi({
     reducerPath: 'weekApi',
@@ -10,8 +13,8 @@ export const weekApi = createApi({
     endpoints: builder => ({
         getWeek: builder.query<Week,number>({
             query: (w) => '/season/week/'+w,
-            transformResponse: (res:string) => {
-                return JSON.parse(res).result;
+            transformResponse: (res:weekRes) => {
+                return res.result;
             }
         }),
         updateSeason: builder.query<string,void>({

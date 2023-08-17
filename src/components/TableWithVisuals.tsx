@@ -9,16 +9,17 @@ import { setWeekNum } from '../slices/weekNumSlice'
 import { RootState } from '../store'
 
 
-const TableWithVisuals = () => {
+const TableWithVisuals = ({weekNum}:{weekNum:number}) => {
 
-    const weekNum = useSelector((state:RootState)=>state.weekNum.weekNum)
 
     const dispatch = useDispatch();
     const { data, isError, isLoading} = useGetWeekQuery(weekNum)
-    //const [weekArr, setWeekArr] = useState({});
 
     useEffect(()=>{
-    },[])
+        if(!isLoading&&!isError){
+            dispatch(setWeekData(data))
+        }
+    },[data,dispatch,isLoading,isError])
     const changeWeek = (num:number) => {
         console.log('change week to:')
         console.log(num)

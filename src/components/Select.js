@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 const Select = ({thisWeek, onChange, num}) => {
     let opts = []
-    let thisWeekNum = thisWeek.split(' ')[1];
+    //let thisWeekNum = thisWeek.split(' ')[1];
     const [selectedWeek, setSelectedWeek] = useState('')
     for(let i=1; i<=num; i++){
         opts.push(i)
@@ -12,11 +12,11 @@ const Select = ({thisWeek, onChange, num}) => {
         onChange(e.target.value)
         //changeweek(e.target.value)
     }
-        console.log(selectedWeek)
+        //console.log(selectedWeek)
     return (
         <select className="select w-full max-w-xs" onChange={e=>handleChange(e)} >
             {opts.map(x=>{
-                if(x===Number(thisWeekNum)){
+                if(x===Number(thisWeek)){
                 return <option value={x} key={x} selected>Week {x}</option>
                 }
                 return <option value={x} key={x}>Week {x}</option>

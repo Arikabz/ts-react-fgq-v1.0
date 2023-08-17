@@ -17,7 +17,7 @@ interface weekNum {
 interface Week {
     _id: string;
     Week: number;
-    'Games': Array<Game>;
+    Games: Array<Game>;
     updatedAt: string;
 }
 interface GameWeek {
