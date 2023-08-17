@@ -1,5 +1,9 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react"
 
+interface weekNumRes {
+    result: Array<string>
+}
+
 export const weekApi = createApi({
     reducerPath: 'weekApi',
     baseQuery: fetchBaseQuery({baseUrl:'http://localhost:6969/api'}),
@@ -15,8 +19,8 @@ export const weekApi = createApi({
         }),
         getCurrentWeek: builder.query<number,void>({
             query: () => '/currentWeek',
-            transformResponse: (res:string) => {
-                const data = JSON.parse(res).result[0];
+            transformResponse: (res:weekNumRes) => {
+                const data = res.result[0]
                 const match = data.match(/\d+/);
                 const parsedNumber = match ? parseInt(match[0]) : -1;
                 return isNaN(parsedNumber) ? -1 : parsedNumber;

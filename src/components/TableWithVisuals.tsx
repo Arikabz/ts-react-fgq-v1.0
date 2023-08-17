@@ -14,7 +14,7 @@ const TableWithVisuals = () => {
     const weekNum = useSelector((state:RootState)=>state.weekNum.weekNum)
 
     const dispatch = useDispatch();
-    const { data } = useGetWeekQuery(weekNum)
+    const { data, isError, isLoading} = useGetWeekQuery(weekNum)
     //const [weekArr, setWeekArr] = useState({});
 
     useEffect(()=>{
@@ -26,7 +26,9 @@ const TableWithVisuals = () => {
         //getWeek(num).then(x=> setWeekArr(x))
     }
     //if(data !== undefined){
+    if(!isLoading&&!isError){
         dispatch(setWeekData(data))
+    }
         return (
         <>    
             

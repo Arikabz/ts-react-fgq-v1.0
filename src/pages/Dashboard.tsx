@@ -10,9 +10,11 @@ import RadialProgress from '../components/RadialProgress'
 
 
 const Dashboard = () => {
-    const {isError, data } = useGetCurrentWeekQuery();
+    const {isError, data, isLoading} = useGetCurrentWeekQuery();
     const dispatch = useDispatch();
+    if(!isLoading&&data){
         dispatch(setWeekNum(data));
+    }
         return(
         
             <div>
