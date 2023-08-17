@@ -1,13 +1,13 @@
 import { useState } from "react"
 
-const Select = ({thisWeek, onChange, num}) => {
+const Select = ({thisWeek, onChange, num}:{thisWeek:string,onChange:Function,num:number}) => {
     const [current, setCurrent] = useState(thisWeek)
     let opts = []
 
     for(let i=1; i<=num; i++){
         opts.push(i)
     }
-    function handleChange(e){
+    function handleChange(e: React.ChangeEvent<HTMLSelectElement>){
         onChange(e.target.value)
         setCurrent(e.target.value)
     }
