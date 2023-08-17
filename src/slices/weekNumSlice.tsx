@@ -9,7 +9,7 @@ export const weekNumSlice = createSlice({
     initialState,
     reducers:{
         setWeekNum: (state, action) => {
-            state.weekNum = action.payload.weekNum
+            state.weekNum = action.payload.weekNum;
         }
     }
 })

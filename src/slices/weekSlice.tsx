@@ -11,9 +11,9 @@ export const weekSlice = createSlice({
     initialState,
     reducers:{
         setWeekData: (state, action) => {
-            state.dataFetched = true,
-            state.Week = action.payload.Week,
-            state.Games = action.payload.Games
+            state.dataFetched = true;
+            state.Week = action.payload.Week;
+            state.Games = action.payload.Games;
         }
     }
 })

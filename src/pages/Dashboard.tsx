@@ -5,21 +5,30 @@ import NavbarLoggedIn from '../components/NavbarLoggedIn'
 import { useGetCurrentWeekQuery } from '../slices/apiSlice'
 import { useDispatch } from 'react-redux'
 import { setWeekNum } from '../slices/weekNumSlice'
+import RadialProgress from '../components/RadialProgress'
+
 
 
 const Dashboard = () => {
-    const {isError, data, isFetching } = useGetCurrentWeekQuery();
+    const {isError, data } = useGetCurrentWeekQuery();
     const dispatch = useDispatch();
-    if(isError) return <>Error</>
-    if(isFetching && !data) return <>Loadin</>
-    else if (data !== undefined ){
         dispatch(setWeekNum(data));
         return(
+        
             <div>
-                <NavbarLoggedIn content={<TableWithVisuals weekNum={data} />} />
+            {
+                data &&
+                <NavbarLoggedIn content={<TableWithVisuals/>} />
+            }
+            {
+                !data &&
+                <RadialProgress  />
+            }{
+                isError &&
+                    <div>ERROR!</div>
+            }
             </div>
         )
-    }
 }
 
 export default Dashboard

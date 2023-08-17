@@ -1,20 +1,20 @@
-import React, {Dispatch, useEffect, useState} from 'react'
+import  { useEffect} from 'react'
 import Select from '../components/Select'
 import RadialProgress from '../components/RadialProgress'
 import Entry from './Entry'
 import { useGetWeekQuery } from '../slices/apiSlice'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setWeekData } from '../slices/weekSlice'
 import { setWeekNum } from '../slices/weekNumSlice'
+import { RootState } from '../store'
 
-type Props ={
-    weekNum:number;
-}
 
-const TableWithVisuals = ({weekNum}:Props) => {
+const TableWithVisuals = () => {
+
+    const weekNum = useSelector((state:RootState)=>state.weekNum.weekNum)
 
     const dispatch = useDispatch();
-    const {isError, data, isFetching} = useGetWeekQuery(weekNum)
+    const { data } = useGetWeekQuery(weekNum)
     //const [weekArr, setWeekArr] = useState({});
 
     useEffect(()=>{
@@ -25,13 +25,13 @@ const TableWithVisuals = ({weekNum}:Props) => {
         dispatch(setWeekNum(num))
         //getWeek(num).then(x=> setWeekArr(x))
     }
-    if(isError) return <>Error</>
-    if(isFetching && !data) return <>Loading</>
-    else if(data !== undefined){
+    //if(data !== undefined){
         dispatch(setWeekData(data))
         return (
+        <>    
+            
         <div className="overflow-x-auto w-full">
-            {weekArr.result &&
+            {data &&
                 <table className="table w-full">
                     <thead>
                         <tr>
@@ -45,13 +45,13 @@ const TableWithVisuals = ({weekNum}:Props) => {
                             <th>Home</th>
                             <th>More</th>
                             <th>
-                                <Select thisWeek={thisWeek} onChange={changeWeek} num={16}/>
+                                <Select thisWeek={weekNum} onChange={changeWeek} num={16}/>
                             </th>
                         </tr>
                     </thead>
                     <tbody>
 
-                        {games.map((g:Game,i:number) => {
+                        {data.Games.map((g:Game,i:number) => {
                             return <Entry key={i+1} game={g}/>
                         })}
                     </tbody>
@@ -68,12 +68,13 @@ const TableWithVisuals = ({weekNum}:Props) => {
 
                 </table>
             }
-            {!weekArr.result &&
+            {!data &&
 
                 <RadialProgress />
             }
         </div>
-    )}
+        </>
+    )
 }
 
 export default TableWithVisuals

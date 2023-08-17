@@ -4,7 +4,7 @@ export const weekApi = createApi({
     reducerPath: 'weekApi',
     baseQuery: fetchBaseQuery({baseUrl:'http://localhost:6969/api'}),
     endpoints: builder => ({
-        getWeek: builder.query<GameWeek,number>({
+        getWeek: builder.query<Week,number>({
             query: (w) => '/season/week/'+w,
             transformResponse: (res:string) => {
                 return JSON.parse(res).result;
