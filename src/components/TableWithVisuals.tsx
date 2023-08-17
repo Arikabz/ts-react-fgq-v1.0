@@ -1,34 +1,27 @@
-import  { useEffect} from 'react'
+import  { useEffect, useState} from 'react'
 import Select from '../components/Select'
 import RadialProgress from '../components/RadialProgress'
 import Entry from './Entry'
 import { useGetWeekQuery } from '../slices/apiSlice'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { setWeekData } from '../slices/weekSlice'
 import { setWeekNum } from '../slices/weekNumSlice'
-import { RootState } from '../store'
 
 
 const TableWithVisuals = ({weekNum}:{weekNum:number}) => {
-
-
     const dispatch = useDispatch();
-    const { data, isError, isLoading} = useGetWeekQuery(weekNum)
+    const [localWeekNum, setLocalWeekNum] = useState(weekNum)
+    const { data, isError, isLoading} = useGetWeekQuery(localWeekNum)
 
     useEffect(()=>{
         if(!isLoading&&!isError){
             dispatch(setWeekData(data))
         }
-    },[data,dispatch,isLoading,isError])
+    },[ data,dispatch,isLoading,isError,localWeekNum])
+
     const changeWeek = (num:number) => {
-        console.log('change week to:')
-        console.log(num)
+        setLocalWeekNum(num)
         dispatch(setWeekNum(num))
-        //getWeek(num).then(x=> setWeekArr(x))
-    }
-    //if(data !== undefined){
-    if(!isLoading&&!isError){
-        dispatch(setWeekData(data))
     }
         return (
         <>    
