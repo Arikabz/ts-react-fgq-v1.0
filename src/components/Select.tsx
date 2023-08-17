@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-const Select = ({thisWeek, onChange, num}:{thisWeek:string,onChange:Function,num:number}) => {
+const Select = ({thisWeek, onChange, num}:{thisWeek:number,onChange:Function,num:number}) => {
     const [current, setCurrent] = useState(thisWeek)
     let opts = []
 
@@ -9,7 +9,7 @@ const Select = ({thisWeek, onChange, num}:{thisWeek:string,onChange:Function,num
     }
     function handleChange(e: React.ChangeEvent<HTMLSelectElement>){
         onChange(e.target.value)
-        setCurrent(e.target.value)
+        setCurrent(parseInt(e.target.value));
     }
 
     return (
