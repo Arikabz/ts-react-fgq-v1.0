@@ -3,7 +3,8 @@ import {Link} from 'react-router-dom'
 import { useAuth0 } from '@auth0/auth0-react';
 
 const NavbarSidebar = (props) => {
-    const { logout } = useAuth0();
+    const { user, logout } = useAuth0();
+    const { picture } = user;
     return (
         <div className="drawer">
             <input id="my-drawer-3" type="checkbox" className="drawer-toggle" /> 
@@ -17,10 +18,23 @@ const NavbarSidebar = (props) => {
                     <div className="flex-1 px-2 mx-2">
                         <Link to='/dashboard' className='btn btn-ghost normal-case text-xl'>FGQ</Link>
                     </div>
+                    <div className="avatar">
+                        <div className="w-10 rounded-full">
+                            <Link to='/profile'>
+                            <img src={picture} alt='img' />
+                            </Link>
+                        </div>
+                    </div>
                     <div className="flex-none hidden lg:block">
                         <ul className="menu menu-horizontal">
+                            <li>
+                                <Link to='/profile'>
+                                    Perfil
+                                </Link>
+
+                            </li>
                             <li><Link to='/dashboard' className=''>Dashboard</Link></li>
-                            <li><button onClick={()=>logout({ returnTo: window.location.origin})} className=''>Log Out</button></li>
+                            <li><button onClick={()=>logout({ returnTo: window.location.origin})} className=''>Cerrar Sesion</button></li>
                         </ul>
                     </div>
                 </div>
@@ -31,9 +45,8 @@ const NavbarSidebar = (props) => {
                 <label htmlFor="my-drawer-3" className="drawer-overlay"></label> 
                 <ul className="menu p-4 overflow-y-auto w-80 bg-base-100">
                     <li><Link to='/dashboard' className=''>Dashboard</Link></li>
-                    <li><Link to='/leaderboard' className=''>Leaderboard</Link></li>
                     <li><Link to='/profile' className=''>Perfil</Link></li>
-                    <li><button onClick={()=>logout({ returnTo: window.location.origin})} className=''>Log Out</button></li>
+                    <li><button onClick={()=>logout({ returnTo: window.location.origin})} className=''>Cerrar Sesion</button></li>
                 </ul>
             </div>
         </div>
