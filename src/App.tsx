@@ -1,12 +1,8 @@
 import './App.css';
 import {Route, Routes} from 'react-router-dom'
 import Home from './pages/Home'
-//import Login from './pages/Login'
-//import Signup from './pages/Signup'
-//import Profile from './pages/Profile'
 import Dashboard from './pages/Dashboard'
 import { useAuth0 } from '@auth0/auth0-react';
-//import ForgotPassword from './pages/ForgotPassword'
 import FooterSlim from './components/FooterSlim';
 import RadialProgress from './components/RadialProgress';
 import League from './pages/League';

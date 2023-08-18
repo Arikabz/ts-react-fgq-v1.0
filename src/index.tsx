@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
-import { Auth0Provider } from '@auth0/auth0-react';
+import Auth0ProviderWithHistory from './auth/auth0-provider-with-history';
 import { Provider } from 'react-redux';
 import { store } from './store';
 
@@ -16,14 +16,11 @@ const root = ReactDOM.createRoot(elassert);
 root.render(
     <React.StrictMode>
         <BrowserRouter>
-            <Auth0Provider 
-                domain='dev-7fzxcbarf08zoaab.us.auth0.com'
-                clientId='e1Lr5fXH5T4VrRoCEvg1CBHwRdSj0Qcs'
-                redirectUri='http://localhost:3000/dashboard'>
+            <Auth0ProviderWithHistory>
                 <Provider store={store}>
                 <App />
                 </Provider>
-            </Auth0Provider >
+            </Auth0ProviderWithHistory >
         </BrowserRouter>
     </React.StrictMode>
 );

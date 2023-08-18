@@ -1,4 +1,5 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react"
+import { useSelector } from "react-redux"
 
 interface weekNumRes {
     result: Array<string>
@@ -7,9 +8,11 @@ interface weekRes {
     result: Week
 }
 
+
 export const weekApi = createApi({
     reducerPath: 'weekApi',
-    baseQuery: fetchBaseQuery({baseUrl:'http://localhost:6969/api'}),
+    baseQuery: fetchBaseQuery({baseUrl:'http://localhost:6969/api',
+    }),
     endpoints: builder => ({
         getWeek: builder.query<Week,number>({
             query: (w) => '/season/week/'+w,

@@ -1,4 +1,3 @@
-import React from 'react'
 import LoginButton from './login-button'
 import SignupButton from './signup-button'
 
