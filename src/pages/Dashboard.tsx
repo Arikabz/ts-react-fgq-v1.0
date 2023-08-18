@@ -12,28 +12,26 @@ import RadialProgress from '../components/RadialProgress'
 
 
 const Dashboard = () => {
-    const {isError, data, isLoading} = useGetCurrentWeekQuery();
     const dispatch = useDispatch();
     const { getAccessTokenSilently } = useAuth0();
+    const {isError, data, isLoading} = useGetCurrentWeekQuery();
 
     useEffect(() => {
-        const fetchToken = async () => {
+        const fetchData = async () => {
             try {
                 const token = await getAccessTokenSilently();
-                dispatch(setToken(token));
+                dispatch(setToken(token)); // Dispatch token first
+                if (!isLoading && data) {
+                    dispatch(setWeekNum(data)); // Dispatch weekNum after getting token
+                }
             } catch (error) {
                 console.error('Error fetching access token:', error);
             }
         };
 
-        fetchToken();
-    }, [dispatch, getAccessTokenSilently]);
+        fetchData();
+    }, [dispatch, getAccessTokenSilently, isLoading, data]);
 
-    useEffect(() => {
-        if (!isLoading && data) {
-            dispatch(setWeekNum(data));
-        }
-    }, [data, dispatch, isLoading]);
     return (
         <div>
             {data ? (
