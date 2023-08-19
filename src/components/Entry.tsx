@@ -60,9 +60,18 @@ const Entry = ({game}:entryProps) => {
     let happened = game.result || false
     if(game.result){
         let scores = game.result.split(' ')
+        console.log(scores)
 
 
-        const awayInitials = getTeamAbbreviation(game.Away)
+        const getAwayInitials = (input:string) =>{
+            if(getTeamAbbreviation(input)==='N/A'){
+                const trimmedAway = game.Away.split(' ').filter(x=> x!==''&&x!=='\n').filter((x,i)=>i!==0).join(' ');
+                return getTeamAbbreviation(trimmedAway);
+            } else return getTeamAbbreviation(input)
+        }
+        const awayInitials = getAwayInitials(game.Away)
+        console.log(awayInitials)
+
         if(awayInitials===scores[0]){
             home.score = scores[4]
             home.class = 'text-green-600'
