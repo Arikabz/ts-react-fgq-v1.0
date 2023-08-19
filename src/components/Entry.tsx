@@ -1,54 +1,27 @@
+import { weekApi } from "../slices/apiSlice";
+import { getTeamAbbreviation } from "../services/teamAbbreviation";
+import { useState } from "react";
+
 interface entryProps {
     game: Game;
 }
-
-function getTeamAbbreviation(teamName: string): string {
-    const teamAbbreviations: Record<string, string> = {
-        'Arizona': 'ARI',
-        'Atlanta': 'ATL',
-        'Baltimore': 'BAL',
-        'Buffalo': 'BUF',
-        'Carolina': 'CAR',
-        'Chicago': 'CHI',
-        'Cincinnati': 'CIN',
-        'Cleveland': 'CLE',
-        'Dallas': 'DAL',
-        'Denver': 'DEN',
-        'Detroit': 'DET',
-        'Green Bay': 'GB',
-        'Houston': 'HOU',
-        'Indianapolis': 'IND',
-        'Jacksonville': 'JAX',
-        'Kansas City': 'KC',
-        'Las Vegas': 'LV',
-        'Los Angeles Chargers': 'LAC',
-        'Los Angeles Rams': 'LAR',
-        'Miami': 'MIA',
-        'Minnesota': 'MIN',
-        'New England': 'NE',
-        'New Orleans': 'NO',
-        'N.Y. Giants': 'NYG',
-        'N.Y. Jets': 'NYJ',
-        'Philadelphia': 'PHI',
-        'Pittsburgh': 'PIT',
-        'San Francisco': 'SF',
-        'Seattle': 'SEA',
-        'Tampa Bay': 'TB',
-        'Tennessee': 'TEN',
-        'Washington': 'WAS',
-    };
-
-    const normalizedTeamName = teamName.trim(); // Remove leading/trailing spaces
-    const abbreviation = teamAbbreviations[normalizedTeamName] || 'N/A';
-    return abbreviation;
-}
-
 interface teamData {
     score: string,
     class: string,
 }
 
+
+
 const Entry = ({game}:entryProps) => {
+    const [md, setMd] = useState(window.matchMedia("(min-width:768)").matches)
+    const [prediction, setPrediction] = useState('');
+    const [inputAway, setInputAway] = useState('');
+    const [inputHome, setInputHome] = useState('');
+    const [awayPrediction, setAwayPrediction] = useState(prediction.awayPrediction);
+    const [homePrediction, setHomePrediction] = useState(prediction.homePrediction);
+
+
+
     const home:teamData = {
         score: '',
         class: '',
@@ -57,7 +30,9 @@ const Entry = ({game}:entryProps) => {
         score: '',
         class: '',
     }
+
     let happened = game.result || false
+
     if(game.result){
         let scores = game.result.split(' ')
         console.log(scores)
@@ -92,6 +67,11 @@ const Entry = ({game}:entryProps) => {
             return game.TV
         }
     }
+
+    const showGuessInput = () => {
+        console.log('stuff')
+    }
+
 
     return (
         <tr>

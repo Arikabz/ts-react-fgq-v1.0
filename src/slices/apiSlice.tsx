@@ -43,8 +43,127 @@ export const weekApi = createApi({
                 const parsedNumber = match ? parseInt(match[0]) : -1;
                 return isNaN(parsedNumber) ? -1 : parsedNumber;
             }
-        })
-    })
+        }),
+        editExtraPoints: builder.mutation({
+            query: ({userID, points, reason}) => ({
+                url: '/user/editExtraPoints',
+                method: 'POST',
+                body: JSON.stringify({
+                    userID:userID,
+                    points:points,
+                    reason:reason,
+                }),
+                header: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+            }),
+        }),
+        getUserInfo: builder.mutation({
+            query: (payload) => ({
+                url: '/user/getUserInfo',
+                method: 'POST',
+                body: JSON.stringify({
+                    email: payload.email,
+                }),
+                header: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+            }),
+        }),
+        postSinglePrediction: builder.mutation({
+            query: (payload) => ({
+                url: '/predictions/uploadSinglePrediction',
+                method: 'POST',
+                body: JSON.stringify({
+                    userID: payload.userID,
+                    weekNum: payload.weekNum,
+                    leagueID: payload.leagueID,
+                    gameNum: payload.gameNum,
+                    awayGuess: payload.awayGuess,
+                    homeGuess: payload.homeGuess,
+                }),
+                header: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+            }),
+        }),
+        makePredictionTemplate: builder.mutation({
+            query: (payload) => ({
+                url: '/predictions/makePredictionTemplate',
+                method: 'POST',
+                body: JSON.stringify({
+                    userID: payload.userID,
+                    weekNum: payload.weekNum,
+                    leagueID: payload.leagueID,
+                }),
+                header: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+            }),
+        }),
+        createLeague: builder.mutation({
+            query: (payload) => ({
+                url: 'league/createLeague',
+                method: 'POST',
+                body: JSON.stringify({
+                    email: payload.email,
+                }),
+                header: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+            }),
+        }),
+        registerUserInLeague: builder.mutation({
+            query: (payload) => ({
+                url: '/user/registerUserInLeague',
+                method: 'POST',
+                body: JSON.stringify({
+                    email: payload.email,
+                    leagueID: payload.leagueID,
+                }),
+                header: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+            }),
+        }),
+        getLeagueData: builder.mutation({
+            query: (payload) => ({
+                url: '/user/getLeagueData',
+                method: 'POST',
+                body: JSON.stringify({
+                    leagueID: payload.leagueID,
+                }),
+                header: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+            }),
+        }),
+        checkUserAndRegister: builder.mutation({
+            query: (payload) => ({
+                url: '/user/checkAndRegister',
+                method: 'POST',
+                body: JSON.stringify({
+                    email: payload.email,
+                    userName: payload.userName,
+                }),
+                header: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+            }),
+        }),
+        getLeagueUsers: builder.mutation({
+            query: (leagueID:string) => ({
+                url: '/user/getLeagueUsers',
+                method: 'POST',
+                body: JSON.stringify({
+                    leagueID:leagueID,
+                }),
+                header: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+            }),
+        }),
+    }),
 })
 
-export const {useGetWeekQuery, useUpdateSeasonQuery, useGetCurrentWeekQuery} = weekApi;
+export const {useGetWeekQuery, useUpdateSeasonQuery, useGetCurrentWeekQuery } = weekApi;

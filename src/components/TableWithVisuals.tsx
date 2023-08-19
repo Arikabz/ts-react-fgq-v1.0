@@ -9,8 +9,13 @@ import { setWeekNum } from '../slices/weekNumSlice'
 
 
 const TableWithVisuals = ({weekNum}:{weekNum:number}) => {
+    const currentTime = new Date();
+    const now = Date.now();
+    console.log(now)
     const dispatch = useDispatch();
     const [localWeekNum, setLocalWeekNum] = useState(weekNum)
+    const [md, setMd] = useState(window.matchMedia("(min-width: 768px)").matches)
+    const [showInput, setShowInput] = useState(false)
     const { data, isError, isLoading} = useGetWeekQuery(localWeekNum)
 
     useEffect(()=>{
@@ -24,52 +29,52 @@ const TableWithVisuals = ({weekNum}:{weekNum:number}) => {
         setLocalWeekNum(num)
         dispatch(setWeekNum(num))
     }
-        return (
+    return (
         <>    
-            
-        <div className="overflow-x-auto w-full">
-            {data &&
-                <table className="table w-full">
-                    <thead>
-                        <tr>
-                            <th>
-                                <label>
-                                    <input type="checkbox" className="checkbox" />
-                                </label>
-                            </th>
-                            <th>Away</th>
-                            <th></th>
-                            <th>Home</th>
-                            <th>More</th>
-                            <th>
-                                <Select thisWeek={weekNum} onChange={changeWeek} num={16}/>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
 
-                        {data.Games.map((g:Game,i:number) => {
-                            return <Entry key={i+1} game={g}/>
-                        })}
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <th></th>
-                            <th>Away</th>
-                            <th></th>
-                            <th>Home</th>
-                            <th>More</th>
-                            <th></th>
-                        </tr>
-                    </tfoot>
+            <div className="overflow-x-auto w-full">
+                {data &&
+                    <table className="table w-full">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <label>
+                                        <input type="checkbox" className="checkbox" />
+                                    </label>
+                                </th>
+                                <th>Away</th>
+                                <th></th>
+                                <th>Home</th>
+                                <th>More</th>
+                                <th>
+                                    <Select thisWeek={weekNum} onChange={changeWeek} num={16}/>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                </table>
-            }
-            {!data &&
+                            {data.Games.map((g:Game,i:number) => {
+                                return <Entry key={i+1} game={g}/>
+                            })}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th>Away</th>
+                                <th></th>
+                                <th>Home</th>
+                                <th>More</th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
 
-                <RadialProgress />
-            }
-        </div>
+                    </table>
+                }
+                {!data &&
+
+                    <RadialProgress />
+                }
+            </div>
         </>
     )
 }
