@@ -15,6 +15,7 @@ const TableWithVisuals = ({weekNum}:{weekNum:number}) => {
 
     useEffect(()=>{
         if(!isLoading&&!isError){
+            console.log(data)
             dispatch(setWeekData(data))
         }
     },[ data,dispatch,isLoading,isError,localWeekNum])

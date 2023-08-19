@@ -6,9 +6,12 @@ import { useAuth0 } from '@auth0/auth0-react';
 import FooterSlim from './components/FooterSlim';
 import RadialProgress from './components/RadialProgress';
 import League from './pages/League';
+import { sec } from './auth/security';
 
 
 function App() {
+    const {getAccessTokenSilently } = useAuth0();
+    sec.setAccessTokenSilently(getAccessTokenSilently)
     const {isLoading} = useAuth0();
     //getWeek(6).then(x=>console.log(x.result[0].Games[1].Away))
     if(isLoading){

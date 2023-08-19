@@ -1,23 +1,35 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react"
-import { useSelector } from "react-redux"
+import { sec } from "../auth/security"
+
 
 interface weekNumRes {
     result: Array<string>
 }
 interface weekRes {
-    result: Week
+    result: [Week]
 }
 
 
 export const weekApi = createApi({
     reducerPath: 'weekApi',
-    baseQuery: fetchBaseQuery({baseUrl:'http://localhost:6969/api',
+    baseQuery: fetchBaseQuery({
+        baseUrl:'http://localhost:6969/api',
+        prepareHeaders: async (headers) => {
+            const authToken = await sec.getAccessTokenSilently()();
+            if (authToken){
+                headers.set(
+                    "Authorization", `Bearer ${authToken}`
+                )
+            }
+            return headers
+        }
     }),
     endpoints: builder => ({
         getWeek: builder.query<Week,number>({
             query: (w) => '/season/week/'+w,
             transformResponse: (res:weekRes) => {
-                return res.result;
+                console.log(res.result[0])
+                return res.result[0];
             }
         }),
         updateSeason: builder.query<string,void>({
@@ -35,4 +47,4 @@ export const weekApi = createApi({
     })
 })
 
-export const {useGetWeekQuery, useUpdateSeasonQuery, useGetCurrentWeekQuery} = weekApi
+export const {useGetWeekQuery, useUpdateSeasonQuery, useGetCurrentWeekQuery} = weekApi;
