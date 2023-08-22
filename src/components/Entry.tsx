@@ -19,6 +19,7 @@ const Entry = ({game}:entryProps) => {
     const [inputHome, setInputHome] = useState('');
     const [awayPrediction, setAwayPrediction] = useState(prediction.awayPrediction);
     const [homePrediction, setHomePrediction] = useState(prediction.homePrediction);
+    const [individualToggle, setIndividualToggle] = useState(false);
 
 
 

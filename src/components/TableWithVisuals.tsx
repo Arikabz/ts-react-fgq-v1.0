@@ -6,6 +6,7 @@ import { useGetWeekQuery } from '../slices/apiSlice'
 import { useDispatch } from 'react-redux'
 import { setWeekData } from '../slices/weekSlice'
 import { setWeekNum } from '../slices/weekNumSlice'
+import { weekApi } from '../slices/apiSlice'
 
 
 const TableWithVisuals = ({weekNum}:{weekNum:number}) => {
